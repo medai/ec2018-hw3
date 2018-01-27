@@ -1,0 +1,13 @@
+.text-center{
+  text-align: center;
+}
+.width-70{
+  min-width: 70px;
+}
+.vertic-center{
+  vertical-align: middle;
+}
+table .form-control.ng-touched.ng-dirty.ng-invalid{
+  border-color: red;
+  box-shadow: 0 0 10px rgba(220,53,69,0.5);
+}

@@ -1,0 +1,145 @@
+<div class="container">
+
+
+    <form class="mt-3 mb-5"
+          novalidate
+          #form="ngForm"
+          (ngSubmit)="addUser(form)">
+
+        <div class="alert alert-danger" *ngIf="userName.errors?.required && userName.touched"> Please enter name </div>
+        <div class="alert alert-danger" *ngIf="userCity.errors?.required && userCity.touched"> Please enter city </div>
+        <div class="alert alert-danger" *ngIf="userEmail.errors?.required && userEmail.touched"> Please enter Email </div>
+        <div class="alert alert-danger" *ngIf="!userEmail.errors?.required && userEmail.invalid"> Email example: example@example.com </div>
+
+        <div class="alert alert-danger" *ngIf="addError"> User add error </div>
+        <div class="alert alert-success" *ngIf="addSuccess"> User add success </div>
+
+        <div class="alert alert-danger" *ngIf="editError"> User edit error </div>
+        <div class="alert alert-success" *ngIf="editSuccess"> User edit success </div>
+
+        <div class="alert alert-danger" *ngIf="delError"> Delete user error </div>
+        <div class="alert alert-success" *ngIf="delSuccess"> Delete user success </div>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input  type        ="text"
+                    class       ="form-control"
+                    [(ngModel)] ="createUser.name"
+                    name        ="name"
+                    #userName  ="ngModel"
+                    required>
+        </div>
+
+        <div class="form-group">
+            <label>City</label>
+            <input  type        ="text"
+                    class       ="form-control"
+                    [(ngModel)] ="createUser.address.city"
+                    name        ="city"
+                    #userCity  ="ngModel"
+                    required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input  type        ="text"
+                    class       ="form-control"
+                    [(ngModel)] ="createUser.email"
+                    name        ="email"
+                    #userEmail  ="ngModel"
+                    email
+                    required>
+        </div>
+
+        <button type        ="submit"
+                class       ="btn btn-primary"
+                [disabled]  ="form.invalid"> Add user </button>
+
+    </form>
+
+
+
+
+
+    <table class="table table-hover table-bordered mt-5">
+
+        <thead>
+          <tr class="table-secondary">
+              <th scope="col">#</th>
+              <th scope="col" class="w-25 text-center">Name</th>
+              <th scope="col" class="w-50 text-center">Email</th>
+              <th scope="col" class="w-25 text-center">City</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let user of users; let i = index">
+
+              <td class="vertic-center"> {{ i+1 }} </td>
+
+              <td class="vertic-center">
+                  <span *ngIf="!user.edit"> {{ user.name }} </span>
+                  <input *ngIf        ="user.edit"
+                         type         ="text"
+                         class        ="form-control"
+                         [(ngModel)]  ="user.name"
+                         name         ="name"
+                         #nameValue   ="ngModel"
+                         required>
+              </td>
+
+              <td class="vertic-center">
+                  <span *ngIf="!user.edit"> {{ user.email }} </span>
+                  <input *ngIf        ="user.edit"
+                         type         ="text"
+                         class        ="form-control"
+                         [(ngModel)]  ="user.email"
+                         name         ="email"
+                         #emailValue  ="ngModel"
+                         email
+                         required>
+              </td>
+
+              <td class="vertic-center">
+                  <span *ngIf="!user.edit"> {{ user.address.city }} </span>
+                  <input *ngIf        ="user.edit"
+                         type         ="text"
+                         class        ="form-control"
+                         [(ngModel)]  ="user.address.city"
+                         name         ="city"
+                         #cityValue   ="ngModel"
+                         required>
+              </td>
+
+              <td class="text-center vertic-center">
+                  <button *ngIf   ="!user.edit"
+                          class   ="btn btn-danger width-85"
+                          (click) ="removeUser(i)"> Delete </button>
+                  <button *ngIf   ="user.edit"
+                          class   ="btn btn-secondary width-85"
+                          (click) ="noSave(i)"> No save </button>
+              </td>
+
+              <td class="text-center vertic-center">
+                  <button *ngIf       ="!user.edit"
+                          class       ="btn btn-primary width-70"
+                          (click)     ="showUser(i)"> Edit
+                  </button>
+                  <button *ngIf       ="user.edit"
+                          class       ="btn btn-success width-70"
+                          (click)     ="editUser(i)"
+                          [disabled]  ="user.name.length<1 || user.email.length<1 || user.address.city.length<1"> Save
+                  </button>
+              </td>
+
+          </tr>
+        </tbody>
+
+    </table>
+
+
+</div>
+
+
